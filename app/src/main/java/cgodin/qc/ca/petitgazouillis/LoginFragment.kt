@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import cgodin.qc.ca.petitgazouillis.data.api.RetrofitClient
 import cgodin.qc.ca.petitgazouillis.data.repository.AuthRepository
 import cgodin.qc.ca.petitgazouillis.data.session.SessionManager
@@ -65,7 +66,7 @@ class LoginFragment : Fragment() {
                     Toast.makeText(requireContext(), "Connexion réussie", Toast.LENGTH_SHORT).show()
 
                     // NAVIGATE TO HOME/FEED
-                    //findNavController().navigate(R.id)
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 }
 
                 is Resource.Error -> {
