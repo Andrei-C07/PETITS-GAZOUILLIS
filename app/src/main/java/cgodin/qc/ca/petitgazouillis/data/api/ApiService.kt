@@ -1,11 +1,17 @@
 package cgodin.qc.ca.petitgazouillis.data.api
 
+import cgodin.qc.ca.petitgazouillis.data.models.CreatePublicationRequest
+import cgodin.qc.ca.petitgazouillis.data.models.CreatePublicationResponse
 import cgodin.qc.ca.petitgazouillis.data.models.LoginRequest
 import cgodin.qc.ca.petitgazouillis.data.models.LoginResponse
 import cgodin.qc.ca.petitgazouillis.data.models.LogoutResponse
+import cgodin.qc.ca.petitgazouillis.data.models.PublicationResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService{
 
@@ -14,4 +20,28 @@ interface ApiService{
 
     @POST("/deconnexion")
     suspend fun logout(): Response<LogoutResponse>
+
+    @GET("/api/publication/")
+    suspend fun getPublications(
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 5
+    ): Response<PublicationResponse>
+
+    @GET("/api/publication/par_user/{user_id}")
+    suspend fun getPublicationsByUser(
+        @Path("user_id") userId: Int,
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 5
+    ): Response<PublicationResponse>
+
+    @GET("/api/publication/suivis")
+    suspend fun getFollowedPublications(
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 5
+    ): Response<PublicationResponse>
+
+    @POST("/api/publication/")
+    suspend fun createPublication(
+        @Body body: CreatePublicationRequest
+    ): Response<CreatePublicationResponse>
 }

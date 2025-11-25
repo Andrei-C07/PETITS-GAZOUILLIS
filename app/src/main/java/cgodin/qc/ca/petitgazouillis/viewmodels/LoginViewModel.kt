@@ -31,9 +31,8 @@ class LoginViewModel(
             )
 
             if (result is Resource.Success) {
-                result.data?.token?.let { token ->
-                    sessionManager.saveToken(token)
-                }
+                sessionManager.saveToken(result.data!!.token)
+                sessionManager.saveUserId(result.data!!.user_id)
             }
 
             _loginState.value = result

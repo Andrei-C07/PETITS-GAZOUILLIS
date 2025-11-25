@@ -3,6 +3,7 @@ package cgodin.qc.ca.petitgazouillis.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import cgodin.qc.ca.petitgazouillis.data.models.Publication
 import cgodin.qc.ca.petitgazouillis.databinding.ItemPostBinding
 
 data class PostUI(

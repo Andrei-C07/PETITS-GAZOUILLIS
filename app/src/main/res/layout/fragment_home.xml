@@ -52,6 +52,7 @@
             android:text="Moi"
             android:layout_marginStart="12dp"
             android:backgroundTint="#00BCD4" />
+
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
@@ -92,6 +93,14 @@
             android:text="Précédent"
             android:backgroundTint="#00BCD4" />
 
+        <TextView
+            android:id="@+id/txtPageCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Page 1"
+            android:textSize="16sp"
+            android:layout_marginHorizontal="20dp" />
+
         <Button
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
@@ -99,6 +108,8 @@
             android:text="Suivant"
             android:layout_marginStart="16dp"
             android:backgroundTint="#00BCD4" />
+
+
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
