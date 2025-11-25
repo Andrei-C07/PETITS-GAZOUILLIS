@@ -5,27 +5,73 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import cgodin.qc.ca.petitgazouillis.data.api.RetrofitClient
+import cgodin.qc.ca.petitgazouillis.data.repository.AuthRepository
+import cgodin.qc.ca.petitgazouillis.data.session.SessionManager
+import cgodin.qc.ca.petitgazouillis.data.utils.Resource
+import cgodin.qc.ca.petitgazouillis.viewmodels.LoginViewModel
+import cgodin.qc.ca.petitgazouillis.viewmodels.LoginViewModelFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LoginFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    }
+
+    private lateinit var loginViewModel: LoginViewModel
+    private lateinit var sessionManager: SessionManager
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        sessionManager = SessionManager(requireContext())
+
+        // Create API + Repo
+        val api = RetrofitClient.create { sessionManager.getToken() }
+        val repo = AuthRepository(api)
+
+        // Create ViewModel
+        loginViewModel = ViewModelProvider(
+            this,
+            LoginViewModelFactory(repo, sessionManager)
+        )[LoginViewModel::class.java]
+
+        val usernameField = view.findViewById<EditText>(R.id.usernameInput)
+        val passwordField = view.findViewById<EditText>(R.id.PasswordInput)
+        val loginButton = view.findViewById<Button>(R.id.btnConnect)
+
+        loginButton.setOnClickListener {
+            val username = usernameField.text.toString()
+            val password = passwordField.text.toString()
+
+            loginViewModel.login(username, password)
+        }
+
+        observeLoginState()
+    }
+
+    private fun observeLoginState() {
+        loginViewModel.loginState.observe(viewLifecycleOwner) { state ->
+
+            when (state) {
+                is Resource.Loading -> {
+                    // show progress
+                }
+
+                is Resource.Success -> {
+                    Toast.makeText(requireContext(), "Connexion réussie", Toast.LENGTH_SHORT).show()
+
+                    // NAVIGATE TO HOME/FEED
+                    //findNavController().navigate(R.id)
+                }
+
+                is Resource.Error -> {
+                    Toast.makeText(requireContext(), state.message ?: "Erreur", Toast.LENGTH_LONG).show()
+                }
+            }
         }
     }
 
@@ -35,25 +81,5 @@ class LoginFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
