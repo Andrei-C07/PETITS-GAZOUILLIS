@@ -31,8 +31,7 @@ class LoginViewModel(
             )
 
             if (result is Resource.Success) {
-                val token = result.data?.token
-                if (token != null) {
+                result.data?.token?.let { token ->
                     sessionManager.saveToken(token)
                 }
             }
