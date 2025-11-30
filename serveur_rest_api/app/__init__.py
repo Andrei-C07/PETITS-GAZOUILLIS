@@ -1,4 +1,5 @@
-from flask import Flask
+import os
+from flask import Flask, send_from_directory
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_seeder import FlaskSeeder
@@ -15,12 +16,17 @@ def create_app():
 
     db.init_app(app)
     init_db(app)
+    os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
     seeder = FlaskSeeder(app, db)
     socketio.init_app(app, cors_allowed_origins="*")
 
 
     register_routes(app)
+
+    @app.route("/uploads/<path:filename>")
+    def uploaded_file(filename):
+        return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
     return app
 

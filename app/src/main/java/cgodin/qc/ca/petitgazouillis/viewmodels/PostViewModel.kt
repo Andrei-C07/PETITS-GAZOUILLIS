@@ -26,6 +26,10 @@ class PostViewModel(
     private var lastUserId: Int? = null
 
     fun loadPublications(filter: String = currentFilter, userId: Int? = null) {
+        if (filter != currentFilter) {
+            page = 1
+        }
+
         currentFilter = filter
 
         if (filter == "me" && userId != null) {
@@ -50,7 +54,8 @@ class PostViewModel(
                 val uiList = body?.data?.map { pub ->
                     PostUI(
                         username = pub.auteur,
-                        text = pub.content
+                        text = pub.content,
+                        photoUrl = pub.photo_url
                     )
                 } ?: emptyList()
 
@@ -76,4 +81,3 @@ class PostViewModel(
 
     fun getCurrentPage() = page
 }
-

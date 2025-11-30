@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">petitGazouillis</string>
+
+    <string name="usernameHint">Username</string>
+    <string name="passwordHint">Password</string>
+    <string name="txtConnect">Login</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="home_title">Home</string>
+    <string name="filter_all">All</string>
+    <string name="filter_followed">Following</string>
+    <string name="filter_mine">Mine</string>
+    <string name="pagination_prev">Previous</string>
+    <string name="pagination_next">Next</string>
+    <string name="page_counter_format">Page %1$d / %2$d</string>
+    <string name="page_counter_default">Page 1 / 1</string>
+    <string name="create_post">New post</string>
+    <string name="profile_fab">Profile</string>
+
+    <string name="profile_title">Profile</string>
+    <string name="profile_back">Back</string>
+    <string name="profile_gallery">Gallery</string>
+    <string name="profile_camera">Camera</string>
+    <string name="profile_save">Save</string>
+    <string name="profile_logout">Logout</string>
+    <string name="profile_hint_display_name">Username</string>
+    <string name="profile_hint_old_password">Current password</string>
+    <string name="profile_hint_new_password">New password</string>
+
+    <string name="toast_profile_updated">Profile updated</string>
+    <string name="toast_password_updated">Password updated</string>
+    <string name="toast_photo_updated">Photo updated</string>
+    <string name="toast_camera_denied">Camera permission denied</string>
+    <string name="toast_no_changes">No changes detected</string>
+    <string name="toast_read_image_failed">Could not read image</string>
+    <string name="toast_login_success">Login successful</string>
+
+    <string name="error_profile_default">Profile error</string>
+    <string name="error_password_default">Password error</string>
+    <string name="error_photo_default">Photo error</string>
+    <string name="error_generic">Error</string>
+    <string name="feed_empty">No posts for this filter</string>
+    <string name="error_service_unavailable">Service unavailable, try again</string>
+    <string name="error_invalid_credentials">Incorrect username or password</string>
+    <string name="error_invalid_format">Invalid format</string>
+</resources>

@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="cgodin.qc.ca.petitgazouillis.ui.HomeFragment"
+        android:name="cgodin.qc.ca.petitgazouillis.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_homeFragment_to_addPostFragment"
             app:destination="@id/addPostFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
@@ -34,5 +37,12 @@
         <action
             android:id="@+id/action_addPostFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="cgodin.qc.ca.petitgazouillis.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

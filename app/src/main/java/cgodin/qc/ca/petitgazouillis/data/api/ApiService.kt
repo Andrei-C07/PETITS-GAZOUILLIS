@@ -5,11 +5,20 @@ import cgodin.qc.ca.petitgazouillis.data.models.CreatePublicationResponse
 import cgodin.qc.ca.petitgazouillis.data.models.LoginRequest
 import cgodin.qc.ca.petitgazouillis.data.models.LoginResponse
 import cgodin.qc.ca.petitgazouillis.data.models.LogoutResponse
+import cgodin.qc.ca.petitgazouillis.data.models.MessageResponse
+import cgodin.qc.ca.petitgazouillis.data.models.PhotoUploadResponse
 import cgodin.qc.ca.petitgazouillis.data.models.PublicationResponse
+import cgodin.qc.ca.petitgazouillis.data.models.UpdatePasswordRequest
+import cgodin.qc.ca.petitgazouillis.data.models.UpdateProfileRequest
+import cgodin.qc.ca.petitgazouillis.data.models.UserProfile
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -44,5 +53,24 @@ interface ApiService{
     suspend fun createPublication(
         @Body body: CreatePublicationRequest
     ): Response<CreatePublicationResponse>
+
+    @GET("/api/utilisateur/profil")
+    suspend fun getProfile(): Response<UserProfile>
+
+    @PUT("/api/utilisateur/profil")
+    suspend fun updateProfile(
+        @Body body: UpdateProfileRequest
+    ): Response<UserProfile>
+
+    @PUT("/api/utilisateur/profil/mot_de_passe")
+    suspend fun updatePassword(
+        @Body body: UpdatePasswordRequest
+    ): Response<MessageResponse>
+
+    @Multipart
+    @POST("/api/utilisateur/profil/photo")
+    suspend fun uploadPhoto(
+        @Part photo: MultipartBody.Part
+    ): Response<PhotoUploadResponse>
 
 }

@@ -8,6 +8,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom_utilisateur = db.Column(db.String(60), unique=True, nullable=False)
     mot_de_passe = db.Column(db.String(255), nullable=False)
+    photo_url = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
     publications = db.relationship("Publication", backref="user", lazy=True)

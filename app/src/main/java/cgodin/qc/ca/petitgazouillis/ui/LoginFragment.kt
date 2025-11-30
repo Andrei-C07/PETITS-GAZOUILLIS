@@ -31,11 +31,9 @@ class LoginFragment : Fragment() {
 
         sessionManager = SessionManager(requireContext())
 
-        // Create API + Repo
         val api = RetrofitClient.create { sessionManager.getToken() }
         val repo = AuthRepository(api)
 
-        // Create ViewModel
         loginViewModel = ViewModelProvider(
             this,
             LoginViewModelFactory(repo, sessionManager)
@@ -60,20 +58,31 @@ class LoginFragment : Fragment() {
 
             when (state) {
                 is Resource.Loading -> {
-                    // show progress
                 }
 
                 is Resource.Success -> {
-                    Toast.makeText(requireContext(), "Connexion réussie", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.toast_login_success), Toast.LENGTH_SHORT).show()
 
-                    // NAVIGATE TO HOME/FEED
                     findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 }
 
                 is Resource.Error -> {
-                    Toast.makeText(requireContext(), state.message ?: "Erreur", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), mapLoginError(state.message), Toast.LENGTH_LONG).show()
                 }
             }
+        }
+    }
+
+    private fun mapLoginError(message: String?): String {
+        val lower = message?.lowercase() ?: ""
+        return when {
+            lower.contains("401") || lower.contains("unauthorized") || lower.contains("pas valide") || lower.contains("incorrect") ->
+                getString(R.string.error_invalid_credentials)
+            lower.contains("failed to connect") || lower.contains("unable to resolve host") || lower.contains("timeout") || lower.contains("refused") ->
+                getString(R.string.error_service_unavailable)
+            lower.contains("format") || lower.contains("invalid") ->
+                getString(R.string.error_invalid_format)
+            else -> message ?: getString(R.string.error_generic)
         }
     }
 
