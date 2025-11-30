@@ -3,4 +3,6 @@
     <string name="usernameHint">Username</string>
     <string name="passwordHint">Password</string>
     <string name="txtConnect">Connect</string>
+    <string name="txtAddPost">Add a post</string>
+    <string name="txtPublish">Publish</string>
 </resources>

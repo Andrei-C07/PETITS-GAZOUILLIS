@@ -1,4 +1,4 @@
-package cgodin.qc.ca.petitgazouillis
+package cgodin.qc.ca.petitgazouillis.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import cgodin.qc.ca.petitgazouillis.R
 import cgodin.qc.ca.petitgazouillis.data.api.RetrofitClient
 import cgodin.qc.ca.petitgazouillis.data.repository.AuthRepository
 import cgodin.qc.ca.petitgazouillis.data.session.SessionManager

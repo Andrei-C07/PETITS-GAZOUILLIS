@@ -44,4 +44,5 @@ interface ApiService{
     suspend fun createPublication(
         @Body body: CreatePublicationRequest
     ): Response<CreatePublicationResponse>
+
 }

@@ -1,4 +1,4 @@
-package cgodin.qc.ca.petitgazouillis
+package cgodin.qc.ca.petitgazouillis.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -6,16 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import cgodin.qc.ca.petitgazouillis.data.api.ApiService
+import cgodin.qc.ca.petitgazouillis.R
 import cgodin.qc.ca.petitgazouillis.data.api.RetrofitClient
 import cgodin.qc.ca.petitgazouillis.data.repository.PublicationRepository
 import cgodin.qc.ca.petitgazouillis.data.session.SessionManager
 import cgodin.qc.ca.petitgazouillis.data.utils.Resource
 import cgodin.qc.ca.petitgazouillis.databinding.FragmentHomeBinding
-import cgodin.qc.ca.petitgazouillis.ui.PostAdapter
 import cgodin.qc.ca.petitgazouillis.viewmodels.PostViewModel
 import cgodin.qc.ca.petitgazouillis.viewmodels.PostViewModelFactory
 
@@ -72,7 +71,7 @@ class HomeFragment : Fragment() {
 
 
         binding.fabCreatePost.setOnClickListener {
-            // TODO: navigate to CreatePostFragment
+            findNavController().navigate(R.id.action_homeFragment_to_addPostFragment)
         }
         postViewModel.totalPages.observe(viewLifecycleOwner) { total ->
             val current = postViewModel.getCurrentPage()
