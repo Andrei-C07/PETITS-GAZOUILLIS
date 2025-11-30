@@ -23,7 +23,8 @@ def list_publications():
             "content": p.content,
             "created_at": p.created_at.isoformat(),
             "auteur": p.user.nom_utilisateur,
-            "user_id": p.user_id
+            "user_id": p.user_id,
+            "photo_url": p.user.photo_url,
         } for p in publications
     ]
 
@@ -47,6 +48,7 @@ def get_publication(pub_id):
             "created_at": publication.created_at,
             "auteur": publication.user.nom_utilisateur,
             "user_id": publication.user.id,
+            "photo_url": publication.user.photo_url,
     }
     return jsonify(result), 200
 
@@ -96,6 +98,7 @@ def publications_par_user(user_id):
             "created_at": p.created_at.isoformat(),
             "auteur": p.user.nom_utilisateur,
             "user_id": p.user_id,
+            "photo_url": p.user.photo_url,
         }
         for p in pubs
     ]
@@ -136,7 +139,8 @@ def publications_suivies():
                 "content": p.content,
                 "created_at": p.created_at.isoformat(),
                 "auteur": p.user.nom_utilisateur,
-                "user_id": p.user_id
+                "user_id": p.user_id,
+                "photo_url": p.user.photo_url
             } for p in pubs
         ]
     }), 200

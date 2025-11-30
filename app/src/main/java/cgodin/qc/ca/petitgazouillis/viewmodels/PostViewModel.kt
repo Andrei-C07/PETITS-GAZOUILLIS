@@ -54,7 +54,8 @@ class PostViewModel(
                 val uiList = body?.data?.map { pub ->
                     PostUI(
                         username = pub.auteur,
-                        text = pub.content
+                        text = pub.content,
+                        photoUrl = pub.photo_url
                     )
                 } ?: emptyList()
 
@@ -80,4 +81,3 @@ class PostViewModel(
 
     fun getCurrentPage() = page
 }
-
