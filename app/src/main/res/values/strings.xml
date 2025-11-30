@@ -1,8 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">petitGazouillis</string>
+
     <string name="usernameHint">Nom d\'utilisateur</string>
     <string name="passwordHint">Mot de passe</string>
     <string name="txtConnect">Connexion</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="home_title">Accueil</string>
+    <string name="filter_all">Tous</string>
+    <string name="filter_followed">Suivis</string>
+    <string name="filter_mine">Moi</string>
+    <string name="pagination_prev">Précédent</string>
+    <string name="pagination_next">Suivant</string>
+    <string name="page_counter_format">Page %1$d / %2$d</string>
+    <string name="page_counter_default">Page 1 / 1</string>
+    <string name="create_post">Créer un post</string>
+    <string name="profile_fab">Profil</string>
+
+    <string name="profile_title">Profil</string>
+    <string name="profile_back">Retour</string>
+    <string name="profile_gallery">Galerie</string>
+    <string name="profile_camera">Caméra</string>
+    <string name="profile_save">Enregistrer</string>
+    <string name="profile_logout">Déconnexion</string>
+    <string name="profile_hint_display_name">Nom d\'utilisateur</string>
+    <string name="profile_hint_old_password">Ancien mot de passe</string>
+    <string name="profile_hint_new_password">Nouveau mot de passe</string>
+
+    <string name="toast_profile_updated">Profil mis à jour</string>
+    <string name="toast_password_updated">Mot de passe mis à jour</string>
+    <string name="toast_photo_updated">Photo mise à jour</string>
+    <string name="toast_camera_denied">Caméra refusée</string>
+    <string name="toast_no_changes">Aucun changement détecté</string>
+    <string name="toast_read_image_failed">Impossible de lire l\'image</string>
+    <string name="toast_login_success">Connexion réussie</string>
+
+    <string name="error_profile_default">Erreur profil</string>
+    <string name="error_password_default">Erreur mot de passe</string>
+    <string name="error_photo_default">Erreur photo</string>
+    <string name="error_generic">Erreur</string>
+    <string name="feed_empty">Aucune publication pour ce filtre</string>
+    <string name="error_service_unavailable">Service indisponible, réessayez</string>
+    <string name="error_invalid_credentials">Nom d\'utilisateur ou mot de passe incorrect</string>
+    <string name="error_invalid_format">Format invalide</string>
 </resources>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF9800">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <Button
+            android:id="@+id/btnBackProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_back"
+            android:backgroundTint="#00BCD4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/profileTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_title"
+            android:textColor="#00BCD4"
+            android:textSize="24sp"
+            android:textStyle="bold|italic"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/white"
+            android:padding="6dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toBottomOf="@id/profileTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/photoActions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/imgProfile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <Button
+                android:id="@+id/btnPickGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_gallery"
+                android:backgroundTint="#00BCD4" />
+
+            <Button
+                android:id="@+id/btnTakePhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_camera"
+                android:layout_marginStart="12dp"
+                android:backgroundTint="#00BCD4" />
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputDisplayName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/profile_hint_display_name"
+            android:background="@color/design_default_color_secondary"
+            android:padding="12dp"
+            app:layout_constraintTop_toBottomOf="@id/photoActions"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputOldPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/profile_hint_old_password"
+            android:inputType="textPassword"
+            android:background="@color/design_default_color_secondary"
+            android:padding="12dp"
+            app:layout_constraintTop_toBottomOf="@id/inputDisplayName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputNewPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="@string/profile_hint_new_password"
+            android:inputType="textPassword"
+            android:background="@color/design_default_color_secondary"
+            android:padding="12dp"
+            app:layout_constraintTop_toBottomOf="@id/inputOldPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/btnSaveProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/profile_save"
+            android:backgroundTint="#00BCD4"
+            app:layout_constraintTop_toBottomOf="@id/inputNewPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/profile_logout"
+            android:backgroundTint="#00BCD4"
+            app:layout_constraintTop_toBottomOf="@id/btnSaveProfile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

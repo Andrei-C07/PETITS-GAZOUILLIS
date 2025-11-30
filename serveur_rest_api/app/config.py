@@ -7,3 +7,4 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY")
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
     SQLALCHEMY_DATABASE_URI = "sqlite:///microblog.db"
+    UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), "uploads")

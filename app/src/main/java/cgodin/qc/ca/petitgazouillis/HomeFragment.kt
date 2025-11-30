@@ -6,9 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.fragment.findNavController
 import cgodin.qc.ca.petitgazouillis.data.api.ApiService
 import cgodin.qc.ca.petitgazouillis.data.api.RetrofitClient
 import cgodin.qc.ca.petitgazouillis.data.repository.PublicationRepository
@@ -37,6 +38,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -70,13 +72,15 @@ class HomeFragment : Fragment() {
             postViewModel.prevPage()
         }
 
-
         binding.fabCreatePost.setOnClickListener {
             // TODO: navigate to CreatePostFragment
         }
+        binding.fabProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+        }
         postViewModel.totalPages.observe(viewLifecycleOwner) { total ->
             val current = postViewModel.getCurrentPage()
-            binding.txtPageCounter.text = "Page $current / $total"
+            binding.txtPageCounter.text = getString(R.string.page_counter_format, current, total)
 
             binding.btnPrev.isEnabled = current > 1
             binding.btnNext.isEnabled = current < total
@@ -85,13 +89,31 @@ class HomeFragment : Fragment() {
         postViewModel.publications.observe(viewLifecycleOwner) { res ->
             when (res) {
                 is Resource.Loading -> {}
-                is Resource.Success -> adapter.submitList(res.data ?: emptyList())
-                is Resource.Error -> {}
+                is Resource.Success -> {
+                    val data = res.data ?: emptyList()
+                    adapter.submitList(data)
+                    binding.emptyState.visibility = if (data.isEmpty()) View.VISIBLE else View.GONE
+                }
+                is Resource.Error -> {
+                    binding.emptyState.visibility = View.VISIBLE
+                    Toast.makeText(requireContext(), mapFeedError(res.message), Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
 
         postViewModel.loadPublications("all")
+    }
+
+    private fun mapFeedError(message: String?): String {
+        val lower = message?.lowercase() ?: ""
+        return when {
+            lower.contains("failed to connect") || lower.contains("unable to resolve host") || lower.contains("timeout") || lower.contains("refused") ->
+                getString(R.string.error_service_unavailable)
+            lower.contains("format") || lower.contains("invalid") ->
+                getString(R.string.error_invalid_format)
+            else -> message ?: getString(R.string.error_generic)
+        }
     }
 
     private fun setupRecyclerView() {
