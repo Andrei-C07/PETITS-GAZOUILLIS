@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import cgodin.qc.ca.petitgazouillis.R
 import androidx.navigation.fragment.findNavController
 import cgodin.qc.ca.petitgazouillis.data.api.ApiService
 import cgodin.qc.ca.petitgazouillis.data.api.RetrofitClient
@@ -73,7 +75,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.fabCreatePost.setOnClickListener {
-            // TODO: navigate to CreatePostFragment
+            findNavController().navigate(R.id.action_homeFragment_to_addPostFragment)
         }
         binding.fabProfile.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
