@@ -26,6 +26,10 @@ class PostViewModel(
     private var lastUserId: Int? = null
 
     fun loadPublications(filter: String = currentFilter, userId: Int? = null) {
+        if (filter != currentFilter) {
+            page = 1
+        }
+
         currentFilter = filter
 
         if (filter == "me" && userId != null) {

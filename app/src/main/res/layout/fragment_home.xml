@@ -116,12 +116,14 @@
         android:id="@+id/fabCreatePost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_input_add"
+        android:layout_margin="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="4dp"
         android:contentDescription="Créer un post"
-        app:tint="@android:color/white"
+        android:src="@android:drawable/ic_input_add"
         app:backgroundTint="#00BCD4"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="24dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@android:color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
