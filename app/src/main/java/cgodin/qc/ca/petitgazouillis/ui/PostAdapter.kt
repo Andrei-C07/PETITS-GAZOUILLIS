@@ -11,9 +11,12 @@ data class PostUI(
     val username: String,
     val text: String,
     val photoUrl: String?,
+    val userId: Int,
 )
 
-class PostAdapter : RecyclerView.Adapter<PostAdapter.PostVH>() {
+class PostAdapter(
+    private val onItemClick: (PostUI) -> Unit
+) : RecyclerView.Adapter<PostAdapter.PostVH>() {
 
     companion object {
         private const val BASE_URL = "http://10.0.2.2:8000"
@@ -50,6 +53,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostVH>() {
             .error(cgodin.qc.ca.petitgazouillis.R.drawable.ic_person_placeholder)
             .circleCrop()
             .into(holder.binding.avatar)
+        holder.binding.root.setOnClickListener { onItemClick(item) }
     }
 
     override fun getItemCount(): Int = list.size

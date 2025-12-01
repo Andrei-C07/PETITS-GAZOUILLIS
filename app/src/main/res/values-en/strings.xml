@@ -44,4 +44,10 @@
     <string name="error_service_unavailable">Service unavailable, try again</string>
     <string name="error_invalid_credentials">Incorrect username or password</string>
     <string name="error_invalid_format">Invalid format</string>
+    <string name="welcome_title">Les petits Gazouillis</string>
+    <string name="welcome_names">by &lt;your names&gt;</string>
+    <string name="welcome_enter">Enter</string>
+    <string name="author_title_prefix">Profile of %1$s</string>
+    <string name="followers_count_format">%1$d follower(s)</string>
+    <string name="following_count_format">%1$d following</string>
 </resources>

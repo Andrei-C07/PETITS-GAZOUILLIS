@@ -44,4 +44,10 @@
     <string name="error_service_unavailable">Service indisponible, réessayez</string>
     <string name="error_invalid_credentials">Nom d\'utilisateur ou mot de passe incorrect</string>
     <string name="error_invalid_format">Format invalide</string>
+    <string name="welcome_title">Les petits Gazouillis</string>
+    <string name="welcome_names">par Alexandru Ciuca et Andrei Cretu</string>
+    <string name="welcome_enter">Entrer</string>
+    <string name="author_title_prefix">Profil de %1$s</string>
+    <string name="followers_count_format">%1$d abonné(s)</string>
+    <string name="following_count_format">%1$d abonnement(s)</string>
 </resources>

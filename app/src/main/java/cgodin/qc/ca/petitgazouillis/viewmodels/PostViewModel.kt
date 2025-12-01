@@ -55,7 +55,8 @@ class PostViewModel(
                     PostUI(
                         username = pub.auteur,
                         text = pub.content,
-                        photoUrl = pub.photo_url
+                        photoUrl = pub.photo_url,
+                        userId = pub.user_id
                     )
                 } ?: emptyList()
 

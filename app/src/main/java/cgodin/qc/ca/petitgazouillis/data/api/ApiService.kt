@@ -72,4 +72,9 @@ interface ApiService{
     suspend fun uploadPhoto(
         @Part photo: MultipartBody.Part
     ): Response<PhotoUploadResponse>
+
+    @GET("/api/utilisateur/{id}")
+    suspend fun getUserById(
+        @Path("id") id: Int
+    ): Response<UserProfile>
 }

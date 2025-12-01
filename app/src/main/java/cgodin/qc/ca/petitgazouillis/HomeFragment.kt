@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.navigation.fragment.findNavController
+import androidx.core.os.bundleOf
 import cgodin.qc.ca.petitgazouillis.data.api.ApiService
 import cgodin.qc.ca.petitgazouillis.data.api.RetrofitClient
 import cgodin.qc.ca.petitgazouillis.data.repository.PublicationRepository
@@ -117,7 +118,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = PostAdapter()
+        adapter = PostAdapter { post ->
+            val action = R.id.action_homeFragment_to_authorProfileFragment
+            findNavController().navigate(
+                action,
+                bundleOf(
+                    "userId" to post.userId,
+                    "username" to post.username
+                )
+            )
+        }
         binding.recyclerViewPosts.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewPosts.adapter = adapter
     }

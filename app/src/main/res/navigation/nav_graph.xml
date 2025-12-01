@@ -3,7 +3,16 @@
              xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/welcomeFragment">
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="cgodin.qc.ca.petitgazouillis.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="cgodin.qc.ca.petitgazouillis.LoginFragment"
@@ -12,6 +21,11 @@
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment"
+            app:popUpTo="@id/welcomeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -25,6 +39,9 @@
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_authorProfileFragment"
+            app:destination="@id/authorProfileFragment" />
     </fragment>
 
     <fragment
@@ -32,4 +49,18 @@
         android:name="cgodin.qc.ca.petitgazouillis.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/authorProfileFragment"
+        android:name="cgodin.qc.ca.petitgazouillis.AuthorProfileFragment"
+        android:label="fragment_author_profile"
+        tools:layout="@layout/fragment_author_profile" >
+        <argument
+            android:name="userId"
+            app:argType="integer" />
+        <argument
+            android:name="username"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
 </navigation>

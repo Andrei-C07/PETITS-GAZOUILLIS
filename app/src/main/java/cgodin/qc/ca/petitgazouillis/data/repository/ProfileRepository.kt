@@ -67,4 +67,17 @@ class ProfileRepository(private val api: ApiService) {
             Resource.Error(e.message ?: "Erreur réseau")
         }
     }
+
+    suspend fun fetchUser(id: Int): Resource<UserProfile> {
+        return try {
+            val response = api.getUserById(id)
+            if (response.isSuccessful && response.body() != null) {
+                Resource.Success(response.body()!!)
+            } else {
+                Resource.Error(response.errorBody()?.string() ?: "Erreur profil")
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Erreur réseau")
+        }
+    }
 }
