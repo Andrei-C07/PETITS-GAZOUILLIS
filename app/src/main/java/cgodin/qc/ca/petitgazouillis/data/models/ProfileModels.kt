@@ -6,7 +6,8 @@ data class UserProfile(
     val photo_url: String?,
     val followers_count: Int? = null,
     val following_count: Int? = null,
-    val created_at: String? = null
+    val created_at: String? = null,
+    val is_following: Boolean? = null
 )
 
 data class UpdateProfileRequest(

@@ -77,4 +77,14 @@ interface ApiService{
     suspend fun getUserById(
         @Path("id") id: Int
     ): Response<UserProfile>
+
+    @POST("/api/utilisateur/suivre/{id}")
+    suspend fun followUser(
+        @Path("id") id: Int
+    ): Response<MessageResponse>
+
+    @retrofit2.http.DELETE("/api/utilisateur/suivre/{id}")
+    suspend fun unfollowUser(
+        @Path("id") id: Int
+    ): Response<MessageResponse>
 }

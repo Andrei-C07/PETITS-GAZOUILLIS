@@ -50,4 +50,9 @@
     <string name="author_title_prefix">Profile of %1$s</string>
     <string name="followers_count_format">%1$d follower(s)</string>
     <string name="following_count_format">%1$d following</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="follow_action">Follow</string>
+    <string name="following_action_success">You are now following this user</string>
+    <string name="unfollow_action_success">You unfollowed this user</string>
 </resources>
