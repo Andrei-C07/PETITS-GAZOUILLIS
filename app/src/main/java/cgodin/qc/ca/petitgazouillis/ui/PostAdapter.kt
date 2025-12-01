@@ -1,6 +1,7 @@
 package cgodin.qc.ca.petitgazouillis.ui
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -11,6 +12,7 @@ data class PostUI(
     val username: String,
     val text: String,
     val photoUrl: String?,
+    val postPhotoUrl: String?,
     val userId: Int,
 )
 
@@ -42,19 +44,38 @@ class PostAdapter(
 
     override fun onBindViewHolder(holder: PostVH, position: Int) {
         val item = list[position]
+
         holder.binding.username.text = item.username
         holder.binding.postText.text = item.text
-        val photoUrl = item.photoUrl?.takeIf { it.isNotBlank() }?.let { url ->
-            if (url.startsWith("http")) url else "$BASE_URL${url.trim()}"
+
+        fun String?.asFullUrl(): String? {
+            return this?.takeIf { it.isNotBlank() }?.let { url ->
+                if (url.startsWith("http")) url else "$BASE_URL${url.trim()}"
+            }
         }
+
         Glide.with(holder.binding.avatar.context)
-            .load(photoUrl)
+            .load(item.photoUrl.asFullUrl())
             .placeholder(cgodin.qc.ca.petitgazouillis.R.drawable.ic_person_placeholder)
             .error(cgodin.qc.ca.petitgazouillis.R.drawable.ic_person_placeholder)
             .circleCrop()
             .into(holder.binding.avatar)
+
+        val postImageUrl = item.postPhotoUrl.asFullUrl()
+
+        if (postImageUrl != null) {
+            holder.binding.postImage.visibility = View.VISIBLE
+            Glide.with(holder.binding.postImage.context)
+                .load(postImageUrl)
+                .centerCrop()
+                .into(holder.binding.postImage)
+        } else {
+            holder.binding.postImage.visibility = View.GONE
+        }
+
         holder.binding.root.setOnClickListener { onItemClick(item) }
     }
+
 
     override fun getItemCount(): Int = list.size
 }

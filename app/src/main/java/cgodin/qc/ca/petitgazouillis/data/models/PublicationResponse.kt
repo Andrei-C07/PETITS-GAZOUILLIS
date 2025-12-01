@@ -14,5 +14,6 @@ data class Publication(
     val created_at: String,
     val auteur: String,
     val user_id: Int,
-    val photo_url: String?
+    val photo_url: String?,
+    val post_photo_url: String?
 )

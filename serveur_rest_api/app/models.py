@@ -32,6 +32,7 @@ class Publication(db.Model):
     __tablename__ = "publications"
 
     id = db.Column(db.Integer, primary_key=True)
+    photo_url = db.Column(db.String(255), nullable=True)
     content = db.Column(db.String(280), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 

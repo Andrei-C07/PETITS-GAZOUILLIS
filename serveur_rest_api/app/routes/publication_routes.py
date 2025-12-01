@@ -25,6 +25,7 @@ def list_publications():
             "auteur": p.user.nom_utilisateur,
             "user_id": p.user_id,
             "photo_url": p.user.photo_url,
+            "post_photo_url": p.photo_url
         } for p in publications
     ]
 
@@ -49,6 +50,7 @@ def get_publication(pub_id):
             "auteur": publication.user.nom_utilisateur,
             "user_id": publication.user.id,
             "photo_url": publication.user.photo_url,
+            "post_photo_url": publication.photo_url
     }
     return jsonify(result), 200
 
@@ -56,28 +58,33 @@ def get_publication(pub_id):
 @jwt_required()
 def create_publication():
     data = request.get_json()
-    current_user = get_jwt_identity()
+    current_user = User.query.get(get_jwt_identity())
 
     if not data or "content" not in data:
         return jsonify({"error": "Contenu est requis."}), 400
- 
-    current_user = User.query.get(get_jwt_identity())
 
     new_pub = Publication(
         content=data["content"],
-        user_id=current_user.id
+        user_id=current_user.id,
+        photo_url=data.get("photo_url")   # <-- FIX HERE
     )
+
     db.session.add(new_pub)
     db.session.commit()
- 
-    #web socket connection
+
     socketio.emit("new_publication", {
         "id": new_pub.id,
+        "photo_url": new_pub.photo_url,
         "content": new_pub.content,
         "auteur": current_user.nom_utilisateur
-    },)
+    })
 
-    return jsonify({"message": "Publication creer", "id": new_pub.id}), 201
+    return jsonify({
+        "message": "Publication créer",
+        "id": new_pub.id,
+        "photo_url": new_pub.photo_url
+    }), 201
+
 
 @publication_bp.get("/par_user/<int:user_id>")
 @jwt_required()
@@ -99,7 +106,9 @@ def publications_par_user(user_id):
             "auteur": p.user.nom_utilisateur,
             "user_id": p.user_id,
             "photo_url": p.user.photo_url,
+            "post_photo_url": p.photo_url
         }
+
         for p in pubs
     ]
 
@@ -140,7 +149,8 @@ def publications_suivies():
                 "created_at": p.created_at.isoformat(),
                 "auteur": p.user.nom_utilisateur,
                 "user_id": p.user_id,
-                "photo_url": p.user.photo_url
+                "photo_url": p.user.photo_url,
+                "post_photo_url": p.photo_url
             } for p in pubs
         ]
     }), 200
