@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/welcomeFragment">
+
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="cgodin.qc.ca.petitgazouillis.WelcomeFragment"
         android:label="fragment_welcome"
-        tools:layout="@layout/fragment_welcome" >
+        tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/action_welcomeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/loginFragment"
-        android:name="cgodin.qc.ca.petitgazouillis.LoginFragment"
+        android:name="cgodin.qc.ca.petitgazouillis.ui.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -32,16 +34,29 @@
         android:id="@+id/homeFragment"
         android:name="cgodin.qc.ca.petitgazouillis.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment" />
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
             android:id="@+id/action_homeFragment_to_authorProfileFragment"
             app:destination="@id/authorProfileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addPostFragment"
+        android:name="cgodin.qc.ca.petitgazouillis.ui.AddPostFragment"
+        android:label="fragment_add_post"
+        tools:layout="@layout/fragment_add_post">
+        <action
+            android:id="@+id/action_addPostFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
@@ -54,7 +69,7 @@
         android:id="@+id/authorProfileFragment"
         android:name="cgodin.qc.ca.petitgazouillis.AuthorProfileFragment"
         android:label="fragment_author_profile"
-        tools:layout="@layout/fragment_author_profile" >
+        tools:layout="@layout/fragment_author_profile">
         <argument
             android:name="userId"
             app:argType="integer" />
@@ -63,4 +78,5 @@
             app:argType="string"
             android:defaultValue="" />
     </fragment>
+
 </navigation>
