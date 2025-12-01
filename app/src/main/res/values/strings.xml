@@ -53,4 +53,9 @@
     <string name="author_title_prefix">Profil de %1$s</string>
     <string name="followers_count_format">%1$d abonné(s)</string>
     <string name="following_count_format">%1$d abonnement(s)</string>
+    <string name="follow">Suivre</string>
+    <string name="unfollow">Ne plus suivre</string>
+    <string name="follow_action">Suivre</string>
+    <string name="following_action_success">Vous suivez maintenant cet utilisateur</string>
+    <string name="unfollow_action_success">Vous ne suivez plus cet utilisateur</string>
 </resources>

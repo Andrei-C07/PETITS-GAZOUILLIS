@@ -17,9 +17,44 @@ class AuthorProfileViewModel(
     private val _profileState = MutableLiveData<Resource<UserProfile>>()
     val profileState: LiveData<Resource<UserProfile>> = _profileState
 
+    private val _followState = MutableLiveData<Resource<Boolean>>()
+    val followState: LiveData<Resource<Boolean>> = _followState
+
     fun loadUser(id: Int) {
         viewModelScope.launch {
             _profileState.value = Resource.Loading()
+            _profileState.value = repository.fetchUser(id)
+        }
+    }
+
+    fun follow(userId: Int) {
+        viewModelScope.launch {
+            _followState.value = Resource.Loading()
+            val res = repository.follow(userId)
+            if (res is Resource.Success) {
+                _followState.value = Resource.Success(true)
+                refreshUser(userId)
+            } else if (res is Resource.Error) {
+                _followState.value = Resource.Error(res.message ?: "Erreur")
+            }
+        }
+    }
+
+    fun unfollow(userId: Int) {
+        viewModelScope.launch {
+            _followState.value = Resource.Loading()
+            val res = repository.unfollow(userId)
+            if (res is Resource.Success) {
+                _followState.value = Resource.Success(false)
+                refreshUser(userId)
+            } else if (res is Resource.Error) {
+                _followState.value = Resource.Error(res.message ?: "Erreur")
+            }
+        }
+    }
+
+    private fun refreshUser(id: Int) {
+        viewModelScope.launch {
             _profileState.value = repository.fetchUser(id)
         }
     }

@@ -55,23 +55,7 @@ def get_user(user_id):
         return jsonify({"error": "User pas trouver"}), 404
 
     current_user_id = get_jwt_identity()
-
-    followers_count = Follow.query.filter_by(following_id=user.id).count()
-    following_count = Follow.query.filter_by(follower_id=user.id).count()
-    is_following = Follow.query.filter_by(
-        follower_id=current_user_id,
-        following_id=user.id
-    ).first() is not None
-
-    result = {
-        "id": user.id,
-        "nom_utilisateur": user.nom_utilisateur,
-        "created_at": user.created_at.isoformat(),
-        "followers_count": followers_count,
-        "following_count": following_count,
-        "is_following": is_following
-    }
-    return jsonify(result), 200
+    return jsonify(_user_payload(user, current_user_id)), 200
 
 @user_bp.get("/current_user")
 @jwt_required()

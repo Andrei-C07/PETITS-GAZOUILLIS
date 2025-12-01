@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import cgodin.qc.ca.petitgazouillis.data.session.SessionManager
 import cgodin.qc.ca.petitgazouillis.data.api.RetrofitClient
 import cgodin.qc.ca.petitgazouillis.data.repository.ProfileRepository
 import cgodin.qc.ca.petitgazouillis.data.utils.Resource
@@ -23,6 +24,8 @@ class AuthorProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: AuthorProfileViewModel
+    private lateinit var session: SessionManager
+    private var viewedUserId: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,21 +37,21 @@ class AuthorProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val session = cgodin.qc.ca.petitgazouillis.data.session.SessionManager(requireContext())
+        session = SessionManager(requireContext())
         val api = RetrofitClient.create { session.getToken() }
         val repo = ProfileRepository(api)
         val factory = AuthorProfileViewModelFactory(repo)
         viewModel = ViewModelProvider(this, factory)[AuthorProfileViewModel::class.java]
 
         binding.btnBackAuthor.setOnClickListener { findNavController().navigateUp() }
-        val userId = arguments?.getInt("userId") ?: -1
+        viewedUserId = arguments?.getInt("userId") ?: -1
         val usernameArg = arguments?.getString("username").orEmpty()
 
         binding.authorTitle.text = getString(R.string.author_title_prefix, usernameArg.ifBlank { getString(R.string.profile_title) })
 
         observe()
-        if (userId != -1) {
-            viewModel.loadUser(userId)
+        if (viewedUserId != -1) {
+            viewModel.loadUser(viewedUserId)
         } else {
             Toast.makeText(requireContext(), getString(R.string.error_generic), Toast.LENGTH_SHORT).show()
         }
@@ -62,6 +65,7 @@ class AuthorProfileFragment : Fragment() {
                     binding.authorUsername.text = profile.nom_utilisateur
                     binding.authorFollowers.text = getString(R.string.followers_count_format, profile.followers_count ?: 0)
                     binding.authorFollowing.text = getString(R.string.following_count_format, profile.following_count ?: 0)
+                    setupFollowButton(profile)
                     profile.photo_url?.let { url ->
                         val full = if (url.startsWith("http")) url else "http://10.0.2.2:8000${url.trim()}"
                         Glide.with(this)
@@ -78,6 +82,40 @@ class AuthorProfileFragment : Fragment() {
                     Toast.makeText(requireContext(), state.message ?: getString(R.string.error_generic), Toast.LENGTH_SHORT).show()
                 }
                 else -> {}
+            }
+        }
+
+        viewModel.followState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is Resource.Success -> {
+                    // state.data true -> now following, false -> unfollowed
+                    val isNowFollowing = state.data ?: false
+                    val txt = if (isNowFollowing) getString(R.string.following_action_success) else getString(R.string.unfollow_action_success)
+                    Toast.makeText(requireContext(), txt, Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Error -> {
+                    Toast.makeText(requireContext(), state.message ?: getString(R.string.error_generic), Toast.LENGTH_SHORT).show()
+                }
+                else -> {}
+            }
+        }
+    }
+
+    private fun setupFollowButton(profile: cgodin.qc.ca.petitgazouillis.data.models.UserProfile) {
+        val currentUserId = session.getUserId()
+        if (profile.id == currentUserId) {
+            binding.btnFollow.visibility = View.GONE
+            return
+        }
+        binding.btnFollow.visibility = View.VISIBLE
+        val isFollowing = profile.is_following == true
+        binding.btnFollow.text = if (isFollowing) getString(R.string.unfollow) else getString(R.string.follow)
+        binding.btnFollow.isEnabled = true
+        binding.btnFollow.setOnClickListener {
+            if (isFollowing) {
+                viewModel.unfollow(profile.id)
+            } else {
+                viewModel.follow(profile.id)
             }
         }
     }
