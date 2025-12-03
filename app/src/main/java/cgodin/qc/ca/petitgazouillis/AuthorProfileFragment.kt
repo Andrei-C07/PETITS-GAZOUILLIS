@@ -43,15 +43,24 @@ class AuthorProfileFragment : Fragment() {
         val factory = AuthorProfileViewModelFactory(repo)
         viewModel = ViewModelProvider(this, factory)[AuthorProfileViewModel::class.java]
 
-        binding.btnBackAuthor.setOnClickListener { findNavController().navigateUp() }
+        binding.btnBackAuthor.setOnClickListener {
+            findNavController().navigate(R.id.action_authorProfileFragment_to_homeFragment)
+        }
         viewedUserId = arguments?.getInt("userId") ?: -1
         val usernameArg = arguments?.getString("username").orEmpty()
 
         binding.authorTitle.text = getString(R.string.author_title_prefix, usernameArg.ifBlank { getString(R.string.profile_title) })
 
         observe()
+
+        val currentUserId = session.getUserId()
+
         if (viewedUserId != -1) {
-            viewModel.loadUser(viewedUserId)
+            if (viewedUserId == currentUserId) {
+                findNavController().navigate(R.id.profileFragment)
+            } else {
+                viewModel.loadUser(viewedUserId)
+            }
         } else {
             Toast.makeText(requireContext(), getString(R.string.error_generic), Toast.LENGTH_SHORT).show()
         }
