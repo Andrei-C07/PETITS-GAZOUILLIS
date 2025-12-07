@@ -54,6 +54,12 @@ interface ApiService{
         @Body body: CreatePublicationRequest
     ): Response<CreatePublicationResponse>
 
+    @Multipart
+    @POST("/api/publication/photo")
+    suspend fun uploadPostPhoto(
+        @Part photo: MultipartBody.Part
+    ): Response<PhotoUploadResponse>
+
     @GET("/api/utilisateur/profil")
     suspend fun getProfile(): Response<UserProfile>
 
@@ -77,6 +83,9 @@ interface ApiService{
     suspend fun getUserById(
         @Path("id") id: Int
     ): Response<UserProfile>
+
+    @GET("/api/utilisateur/")
+    suspend fun listUsers(): Response<List<UserProfile>>
 
     @POST("/api/utilisateur/suivre/{id}")
     suspend fun followUser(

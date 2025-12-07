@@ -65,7 +65,7 @@ class PublicationRepository(private val api: ApiService) {
 
     suspend fun uploadPhoto(photoPart: MultipartBody.Part): Resource<PhotoUploadResponse> {
         return try {
-            val response = api.uploadPhoto(photoPart)
+            val response = api.uploadPostPhoto(photoPart)
             if (response.isSuccessful && response.body() != null) {
                 Resource.Success(response.body()!!)
             } else {

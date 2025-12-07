@@ -35,15 +35,9 @@ def _user_payload(user: User, current_user_id: int | None = None):
 @user_bp.get("/")
 @jwt_required()
 def list_users():
+    current_user_id = get_jwt_identity()
     utilisateurs = User.query.all()
-    result = [
-        {
-            "id": u.id,
-            "nom_utilisateur": u.nom_utilisateur,
-            "created_at": u.created_at.isoformat(),
-        }
-        for u in utilisateurs
-    ]
+    result = [_user_payload(u, current_user_id) for u in utilisateurs]
     return jsonify(result), 200
 
 

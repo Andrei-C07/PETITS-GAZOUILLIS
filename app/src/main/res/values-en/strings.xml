@@ -6,6 +6,8 @@
     <string name="passwordHint">Password</string>
     <string name="txtConnect">Login</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txtAddPost">Add a post</string>
+    <string name="txtPublish">Publish</string>
 
     <string name="home_title">Home</string>
     <string name="filter_all">All</string>
@@ -45,7 +47,7 @@
     <string name="error_invalid_credentials">Incorrect username or password</string>
     <string name="error_invalid_format">Invalid format</string>
     <string name="welcome_title">Les petits Gazouillis</string>
-    <string name="welcome_names">by &lt;your names&gt;</string>
+    <string name="welcome_names">by Alexandru Ciuca and Andrei Cretu</string>
     <string name="welcome_enter">Enter</string>
     <string name="author_title_prefix">Profile of %1$s</string>
     <string name="followers_count_format">%1$d follower(s)</string>
@@ -55,4 +57,8 @@
     <string name="follow_action">Follow</string>
     <string name="following_action_success">You are now following this user</string>
     <string name="unfollow_action_success">You unfollowed this user</string>
+    <string name="user_list_title">User directory</string>
+    <string name="user_list_short">Users</string>
+    <string name="user_stats_format">%1$d follower(s) • %2$d following</string>
+    <string name="user_list_empty">No users found</string>
 </resources>
