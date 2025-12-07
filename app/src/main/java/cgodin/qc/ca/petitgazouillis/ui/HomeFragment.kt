@@ -111,7 +111,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-
         postViewModel.loadPublications("all")
     }
 

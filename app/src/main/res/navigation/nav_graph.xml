@@ -66,7 +66,11 @@
         android:id="@+id/profileFragment"
         android:name="cgodin.qc.ca.petitgazouillis.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/authorProfileFragment"
@@ -80,6 +84,9 @@
             android:name="username"
             app:argType="string"
             android:defaultValue="" />
+        <action
+            android:id="@+id/action_authorProfileFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
