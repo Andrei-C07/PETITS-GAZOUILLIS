@@ -45,9 +45,8 @@ class UserListFragment : Fragment() {
 
         adapter = UserListAdapter(
             onUserClick = { user ->
-                val action = R.id.action_userListFragment_to_authorProfileFragment
                 findNavController().navigate(
-                    action,
+                    R.id.authorProfileFragment,
                     androidx.core.os.bundleOf(
                         "userId" to user.id,
                         "username" to user.nom_utilisateur
@@ -64,10 +63,6 @@ class UserListFragment : Fragment() {
         )
         binding.recyclerUsers.adapter = adapter
         binding.recyclerUsers.layoutManager = LinearLayoutManager(requireContext())
-
-        binding.btnBackUsers.setOnClickListener {
-            findNavController().navigateUp()
-        }
 
         observe()
         viewModel.loadUsers()

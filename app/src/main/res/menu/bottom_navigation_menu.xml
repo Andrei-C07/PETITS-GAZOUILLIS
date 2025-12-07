@@ -13,6 +13,10 @@
         android:title="@string/home_title" />
 
     <item
+        android:id="@+id/userListFragment"
+        android:icon="@drawable/baseline_list_24"
+        android:title="@string/user_list_title" />
+    <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_person_placeholder"
         android:title="@string/profile_title" />

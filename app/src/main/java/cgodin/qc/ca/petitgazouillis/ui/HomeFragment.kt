@@ -75,10 +75,6 @@ class HomeFragment : Fragment() {
             postViewModel.prevPage()
         }
 
-        binding.btnUsers.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_userListFragment)
-        }
-
         postViewModel.totalPages.observe(viewLifecycleOwner) { total ->
             var current = postViewModel.getCurrentPage()
             if (total == 0) {

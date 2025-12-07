@@ -54,13 +54,18 @@ class AuthorProfileFragment : Fragment() {
 
         if (viewedUserId != -1) {
             if (viewedUserId == currentUserId) {
-                findNavController().navigate(R.id.profileFragment)
+                view.post {
+                    findNavController().navigate(R.id.profileFragment)
+                }
             } else {
                 viewModel.loadUser(viewedUserId)
             }
         } else {
             Toast.makeText(requireContext(), getString(R.string.error_generic), Toast.LENGTH_SHORT).show()
         }
+
+
+
     }
 
     private fun observe() {
