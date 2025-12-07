@@ -90,9 +90,6 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupUi() {
-        binding.btnBackProfile.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
-        }
 
         binding.btnPickGallery.setOnClickListener {
             galleryLauncher.launch("image/*")

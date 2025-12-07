@@ -74,13 +74,6 @@ class HomeFragment : Fragment() {
         binding.btnPrev.setOnClickListener {
             postViewModel.prevPage()
         }
-
-        binding.fabCreatePost.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_addPostFragment)
-        }
-        binding.fabProfile.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
-        }
         postViewModel.totalPages.observe(viewLifecycleOwner) { total ->
             val current = postViewModel.getCurrentPage()
             binding.txtPageCounter.text = getString(R.string.page_counter_format, current, total)
@@ -120,15 +113,15 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView() {
         adapter = PostAdapter { post ->
-            val action = R.id.action_homeFragment_to_authorProfileFragment
             findNavController().navigate(
-                action,
+                R.id.authorProfileFragment,
                 bundleOf(
                     "userId" to post.userId,
                     "username" to post.username
                 )
             )
         }
+
         binding.recyclerViewPosts.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewPosts.adapter = adapter
     }
