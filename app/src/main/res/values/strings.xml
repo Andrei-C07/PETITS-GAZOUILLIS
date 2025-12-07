@@ -58,4 +58,8 @@
     <string name="follow_action">Suivre</string>
     <string name="following_action_success">Vous suivez maintenant cet utilisateur</string>
     <string name="unfollow_action_success">Vous ne suivez plus cet utilisateur</string>
+    <string name="user_list_title">Annuaire des utilisateurs</string>
+    <string name="user_list_short">Utilisateurs</string>
+    <string name="user_stats_format">%1$d abonné(s) \u2022 %2$d abonnement(s)</string>
+    <string name="user_list_empty">Aucun utilisateur trouvé</string>
 </resources>

@@ -31,7 +31,7 @@ class LoginFragment : Fragment() {
 
         sessionManager = SessionManager(requireContext())
 
-        val api = RetrofitClient.create { sessionManager.getToken() }
+        val api = RetrofitClient.create(requireContext().applicationContext) { sessionManager.getToken() }
         val repo = AuthRepository(api)
 
         loginViewModel = ViewModelProvider(
@@ -78,7 +78,7 @@ class LoginFragment : Fragment() {
         return when {
             lower.contains("401") || lower.contains("unauthorized") || lower.contains("pas valide") || lower.contains("incorrect") ->
                 getString(R.string.error_invalid_credentials)
-            lower.contains("failed to connect") || lower.contains("unable to resolve host") || lower.contains("timeout") || lower.contains("refused") ->
+            lower.contains("no_internet") || lower.contains("failed to connect") || lower.contains("unable to resolve host") || lower.contains("timeout") || lower.contains("refused") ->
                 getString(R.string.error_service_unavailable)
             lower.contains("format") || lower.contains("invalid") ->
                 getString(R.string.error_invalid_format)

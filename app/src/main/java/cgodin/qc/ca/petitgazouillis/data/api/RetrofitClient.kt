@@ -1,9 +1,12 @@
 package cgodin.qc.ca.petitgazouillis.data.api
 
+import android.content.Context
+import cgodin.qc.ca.petitgazouillis.data.utils.NetworkUtils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
@@ -13,9 +16,18 @@ object RetrofitClient {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-    fun create(tokenProvider: () -> String?): ApiService {
+    fun create(
+        appContext: Context,
+        tokenProvider: () -> String?
+    ): ApiService {
 
         val client = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                if (!NetworkUtils.isOnline(appContext)) {
+                    throw IOException("no_internet")
+                }
+                chain.proceed(chain.request())
+            }
             .addInterceptor(logger)
             .addInterceptor { chain ->
                 val token = tokenProvider()

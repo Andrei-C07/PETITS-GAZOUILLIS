@@ -78,7 +78,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sessionManager = SessionManager(requireContext())
-        val api = RetrofitClient.create { sessionManager.getToken() }
+        val api = RetrofitClient.create(requireContext().applicationContext) { sessionManager.getToken() }
         val repo = ProfileRepository(api)
         val factory = ProfileViewModelFactory(repo)
         viewModel = ViewModelProvider(this, factory)[ProfileViewModel::class.java]
@@ -155,7 +155,7 @@ class ProfileFragment : Fragment() {
                 }
                 is Resource.Error -> {
                     binding.btnSaveProfile.isEnabled = true
-                    Toast.makeText(requireContext(), state.message ?: getString(R.string.error_profile_default), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), mapNetworkError(state.message, R.string.error_profile_default), Toast.LENGTH_SHORT).show()
                 }
                 else -> {}
             }
@@ -169,7 +169,7 @@ class ProfileFragment : Fragment() {
                     binding.inputNewPassword.text?.clear()
                 }
                 is Resource.Error -> {
-                    Toast.makeText(requireContext(), state.message ?: getString(R.string.error_password_default), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), mapNetworkError(state.message, R.string.error_password_default), Toast.LENGTH_SHORT).show()
                 }
                 else -> {}
             }
@@ -182,7 +182,7 @@ class ProfileFragment : Fragment() {
                     Toast.makeText(requireContext(), getString(R.string.toast_photo_updated), Toast.LENGTH_SHORT).show()
                 }
                 is Resource.Error -> {
-                    Toast.makeText(requireContext(), state.message ?: getString(R.string.error_photo_default), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), mapNetworkError(state.message, R.string.error_photo_default), Toast.LENGTH_SHORT).show()
                 }
                 else -> {}
             }
@@ -263,6 +263,15 @@ class ProfileFragment : Fragment() {
             photoFile
         )
         cameraLauncher.launch(currentPhotoUri)
+    }
+
+    private fun mapNetworkError(message: String?, fallbackRes: Int): String {
+        val lower = message?.lowercase() ?: ""
+        return when {
+            lower.contains("no_internet") || lower.contains("failed to connect") || lower.contains("unable to resolve host") || lower.contains("timeout") || lower.contains("refused") ->
+                getString(R.string.error_service_unavailable)
+            else -> message ?: getString(fallbackRes)
+        }
     }
 
     override fun onDestroyView() {

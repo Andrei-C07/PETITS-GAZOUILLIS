@@ -68,7 +68,7 @@ class AddPostFragment : Fragment() {
             findNavController().navigate(R.id.action_addPostFragment_to_homeFragment)
         }
 
-        val api = RetrofitClient.create { sessionManager.getToken() }
+        val api = RetrofitClient.create(requireContext().applicationContext) { sessionManager.getToken() }
         val repo = PublicationRepository(api)
         viewModel = ViewModelProvider(
             this,
@@ -116,7 +116,7 @@ class AddPostFragment : Fragment() {
                 }
                 is Resource.Error -> {
                     btnPublier.isEnabled = true
-                    Toast.makeText(requireContext(), "Erreur: ${state.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), mapPostError(state.message), Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -126,7 +126,7 @@ class AddPostFragment : Fragment() {
             when (state) {
                 is Resource.Loading -> { /* maybe show a progress */ }
                 is Resource.Success -> Toast.makeText(requireContext(), "Photo prête!", Toast.LENGTH_SHORT).show()
-                is Resource.Error -> Toast.makeText(requireContext(), "Erreur upload: ${state.message}", Toast.LENGTH_SHORT).show()
+                is Resource.Error -> Toast.makeText(requireContext(), mapPostError(state.message), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -200,5 +200,15 @@ class AddPostFragment : Fragment() {
         }
         return name
     }
-}
 
+    private fun mapPostError(message: String?): String {
+        val lower = message?.lowercase() ?: ""
+        return when {
+            lower.contains("no_internet") || lower.contains("failed to connect") || lower.contains("unable to resolve host") || lower.contains("timeout") || lower.contains("refused") ->
+                getString(R.string.error_service_unavailable)
+            lower.contains("format") || lower.contains("invalid") ->
+                getString(R.string.error_invalid_format)
+            else -> message ?: getString(R.string.error_generic)
+        }
+    }
+}

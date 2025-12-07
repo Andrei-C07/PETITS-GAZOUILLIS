@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         sessionManager = SessionManager(requireContext())
         Log.d("TOKEN", sessionManager.getToken().toString())
-        val api = RetrofitClient.create { sessionManager.getToken() }
+        val api = RetrofitClient.create(requireContext().applicationContext) { sessionManager.getToken() }
         val repo = PublicationRepository(api)
         val factory = PostViewModelFactory(repo)
         postViewModel = ViewModelProvider(this, factory)[PostViewModel::class.java]
@@ -75,6 +75,10 @@ class HomeFragment : Fragment() {
             postViewModel.prevPage()
         }
 
+        binding.btnUsers.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_userListFragment)
+        }
+
         binding.fabCreatePost.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_addPostFragment)
         }
@@ -82,7 +86,10 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
         }
         postViewModel.totalPages.observe(viewLifecycleOwner) { total ->
-            val current = postViewModel.getCurrentPage()
+            var current = postViewModel.getCurrentPage()
+            if (total == 0) {
+                current = 0
+            }
             binding.txtPageCounter.text = getString(R.string.page_counter_format, current, total)
 
             binding.btnPrev.isEnabled = current > 1
@@ -111,7 +118,7 @@ class HomeFragment : Fragment() {
     private fun mapFeedError(message: String?): String {
         val lower = message?.lowercase() ?: ""
         return when {
-            lower.contains("failed to connect") || lower.contains("unable to resolve host") || lower.contains("timeout") || lower.contains("refused") ->
+            lower.contains("no_internet") || lower.contains("failed to connect") || lower.contains("unable to resolve host") || lower.contains("timeout") || lower.contains("refused") ->
                 getString(R.string.error_service_unavailable)
             lower.contains("format") || lower.contains("invalid") ->
                 getString(R.string.error_invalid_format)

@@ -1,8 +1,11 @@
-from flask import Blueprint, jsonify, request
+import os
+from datetime import datetime
+from flask import Blueprint, jsonify, request, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models import Publication, User, Follow
 from app.db import db
 from app.ws import socketio
+from werkzeug.utils import secure_filename
 
 publication_bp = Blueprint("publication_bp", __name__)
 
@@ -84,6 +87,29 @@ def create_publication():
         "id": new_pub.id,
         "photo_url": new_pub.photo_url
     }), 201
+
+
+@publication_bp.post("/photo")
+@jwt_required()
+def upload_publication_photo():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    if not user:
+        return jsonify({"error": "User pas trouvé"}), 404
+
+    if "photo" not in request.files:
+        return jsonify({"error": "Fichier 'photo' requis"}), 400
+
+    file = request.files["photo"]
+    if file.filename == "":
+        return jsonify({"error": "Nom de fichier invalide"}), 400
+
+    filename = secure_filename(file.filename)
+    unique_name = f"post_{user.id}_{int(datetime.now().timestamp())}_{filename}"
+    save_path = os.path.join(current_app.config["UPLOAD_FOLDER"], unique_name)
+    file.save(save_path)
+
+    return jsonify({"photo_url": f"/uploads/{unique_name}"}), 201
 
 
 @publication_bp.get("/par_user/<int:user_id>")

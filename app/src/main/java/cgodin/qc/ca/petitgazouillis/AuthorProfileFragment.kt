@@ -38,7 +38,7 @@ class AuthorProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         session = SessionManager(requireContext())
-        val api = RetrofitClient.create { session.getToken() }
+        val api = RetrofitClient.create(requireContext().applicationContext) { session.getToken() }
         val repo = ProfileRepository(api)
         val factory = AuthorProfileViewModelFactory(repo)
         viewModel = ViewModelProvider(this, factory)[AuthorProfileViewModel::class.java]
@@ -79,7 +79,7 @@ class AuthorProfileFragment : Fragment() {
                     }
                 }
                 is Resource.Error -> {
-                    Toast.makeText(requireContext(), state.message ?: getString(R.string.error_generic), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), mapNetworkError(state.message), Toast.LENGTH_SHORT).show()
                 }
                 else -> {}
             }
@@ -94,7 +94,7 @@ class AuthorProfileFragment : Fragment() {
                     Toast.makeText(requireContext(), txt, Toast.LENGTH_SHORT).show()
                 }
                 is Resource.Error -> {
-                    Toast.makeText(requireContext(), state.message ?: getString(R.string.error_generic), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), mapNetworkError(state.message), Toast.LENGTH_SHORT).show()
                 }
                 else -> {}
             }
@@ -117,6 +117,15 @@ class AuthorProfileFragment : Fragment() {
             } else {
                 viewModel.follow(profile.id)
             }
+        }
+    }
+
+    private fun mapNetworkError(message: String?): String {
+        val lower = message?.lowercase() ?: ""
+        return when {
+            lower.contains("no_internet") || lower.contains("failed to connect") || lower.contains("unable to resolve host") || lower.contains("timeout") || lower.contains("refused") ->
+                getString(R.string.error_service_unavailable)
+            else -> message ?: getString(R.string.error_generic)
         }
     }
 

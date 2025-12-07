@@ -47,6 +47,9 @@
         <action
             android:id="@+id/action_homeFragment_to_authorProfileFragment"
             app:destination="@id/authorProfileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_userListFragment"
+            app:destination="@id/userListFragment" />
     </fragment>
 
     <fragment
@@ -77,6 +80,16 @@
             android:name="username"
             app:argType="string"
             android:defaultValue="" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userListFragment"
+        android:name="cgodin.qc.ca.petitgazouillis.ui.UserListFragment"
+        android:label="fragment_user_list"
+        tools:layout="@layout/fragment_user_list">
+        <action
+            android:id="@+id/action_userListFragment_to_authorProfileFragment"
+            app:destination="@id/authorProfileFragment" />
     </fragment>
 
 </navigation>
