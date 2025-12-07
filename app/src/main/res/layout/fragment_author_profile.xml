@@ -6,15 +6,6 @@
     android:background="#FF9800"
     android:padding="24dp">
 
-    <Button
-        android:id="@+id/btnBackAuthor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/profile_back"
-        android:backgroundTint="#00BCD4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/authorTitle"
         android:layout_width="wrap_content"

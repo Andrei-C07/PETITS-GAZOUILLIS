@@ -43,9 +43,6 @@ class AuthorProfileFragment : Fragment() {
         val factory = AuthorProfileViewModelFactory(repo)
         viewModel = ViewModelProvider(this, factory)[AuthorProfileViewModel::class.java]
 
-        binding.btnBackAuthor.setOnClickListener {
-            findNavController().navigate(R.id.action_authorProfileFragment_to_homeFragment)
-        }
         viewedUserId = arguments?.getInt("userId") ?: -1
         val usernameArg = arguments?.getString("username").orEmpty()
 

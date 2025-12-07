@@ -62,11 +62,6 @@ class AddPostFragment : Fragment() {
 
         etContenu = binding.etContenu
         btnPublier = binding.btnPublish
-        fabBack = binding.fabBack
-
-        fabBack.setOnClickListener {
-            findNavController().navigate(R.id.action_addPostFragment_to_homeFragment)
-        }
 
         val api = RetrofitClient.create(requireContext().applicationContext) { sessionManager.getToken() }
         val repo = PublicationRepository(api)

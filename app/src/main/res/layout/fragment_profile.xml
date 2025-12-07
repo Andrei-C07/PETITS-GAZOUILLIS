@@ -10,15 +10,6 @@
         android:layout_height="wrap_content"
         android:padding="24dp">
 
-        <Button
-            android:id="@+id/btnBackProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_back"
-            android:backgroundTint="#00BCD4"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <TextView
             android:id="@+id/profileTitle"
             android:layout_width="wrap_content"

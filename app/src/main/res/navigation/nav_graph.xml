@@ -21,13 +21,13 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-        <action
             android:id="@+id/action_loginFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment"
             app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
@@ -40,7 +40,7 @@
             app:destination="@id/loginFragment" />
         <action
             android:id="@+id/action_homeFragment_to_addPostFragment"
-            app:destination="@id/addPostFragment" />
+            app:destination="@id/createPostFragment" />
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
@@ -53,13 +53,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/addPostFragment"
+        android:id="@+id/createPostFragment"
         android:name="cgodin.qc.ca.petitgazouillis.ui.AddPostFragment"
         android:label="fragment_add_post"
         tools:layout="@layout/fragment_add_post">
         <action
             android:id="@+id/action_addPostFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/createPostFragment" />
     </fragment>
 
     <fragment
@@ -69,7 +69,7 @@
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/createPostFragment" />
     </fragment>
 
     <fragment
@@ -86,7 +86,7 @@
             android:defaultValue="" />
         <action
             android:id="@+id/action_authorProfileFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/createPostFragment" />
     </fragment>
 
     <fragment
