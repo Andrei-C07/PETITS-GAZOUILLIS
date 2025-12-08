@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import cgodin.qc.ca.petitgazouillis.databinding.ActivityMainBinding
 
@@ -35,6 +36,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.bottomNavigationView.setupWithNavController(navController)
+
+        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+            if (item.itemId == R.id.userListFragment) {
+                navController.popBackStack(R.id.userListFragment, false)
+            }
+            NavigationUI.onNavDestinationSelected(item, navController)
+            true
+        }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
